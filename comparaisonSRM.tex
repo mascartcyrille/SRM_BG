@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+
+
+\usepackage{array}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{subfig}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[bottom]{footmisc} 
+
+\newcommand{\dd}{\mathop{}\,\mathrm{d}}
+
+\title{Comparaison modèle SRM - Ophélie}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{SRM vs LIF}
+	Le SRM est une généralisation du LIF\cite{1}. 
+	\subsection*{SRM}
+		Le SRM est d\'efinit par un ensemble d'\'equations :\begin{align*}
+			&u_i(t)=\eta(t-\hat{t}_i)+\sum_j\omega_{ij}\sum_f\epsilon_{ij}(t-\hat{t}_i, t-t_j^{(f)})\\
+			&\text{Spike }t^{(f)}:\begin{cases}
+				u_i(t)=\nu(t)\\
+				\frac{\dd u_i}{\dd t}>0
+			\end{cases}
+		\end{align*}
+	\subsection*{LIF}
+		Le LIF (Leaky Integrate and Fire) est d\'efinit par une \'equation diff\'erentielle lin\'eaire :\begin{align*}
+			\tau_m\frac{\dd u_i}{\dd t}=&-u(t)+RI(t)\\
+			\text{Spike }t^{(f)}:&\begin{cases}
+				u(t^{(f)})=\nu\\
+				\displaystyle\lim_{t\to t^{(f)}; t<t^{(f)}}u(t)=u_r,\quad u_r<\nu
+			\end{cases}
+		\end{align*}
+		Dans le cas o`u les courants d'entr\'ee sont les spikes des autres neurones, on a :\begin{equation*}
+			I(t)=\sum_j\omega_{ij}\sum_f\alpha(t-t_j^{(f)})
+		\end{equation*}
+		La solution \`a cette \'equation diff\'erentielle prend alors la forme :
+
+	\subsection*{Comparaison terme \`a terme}
+
+
+\section*{LIF vs Ophélie}
+	Equivalents en régime continu mais différents aux temps d'émission des spikes (en considérant uniquement le soma). Dans le cas du LIF, le potentiel est remis à sa valeur de repos lors de l'émission d'un spike alors que dans le modèle d'Ophélie, la valeur du seuil est retirée à celle du potentiel (équivalents hors périodes réfractaires). La justification principale est la plausibilité biologique (autre raison mathématique?)
+
+	Le retour au potentiel de repos lors de l'émission d'un spike permet un découpage du temps en périodes d'intégration indépendantes (solutions en fonction des entrées). Si on retire la valeur du seuil, on peut quand même définir une fenêtre d'intégration (propre à chaque synapse - on peut prendre le max?) en prenant en compte les délais apportés par les dendrites et la durée des traces des spikes produites aux synapses. Les fenêtres risquent alors de se chevaucher. 
+
+	En ne retournant pas au potentiel de repos lors de l'émission des spikes, est ce que l'on perd des propriétés des modèles SRM/LIF?
+
+	\begin{itemize}
+		\item Retire le seuil lorsque spike (Oph\'elie), LIF remet \`a une valeur de repos
+		\item Pendant la PRA, on continue d'integrer (Oph\'elie), pas LIF
+		\item LIF remet a jour la valeur du potentiel \`a la fin de la PRA, Oph\'elie au moment du spike (donc au d\'ebut de la PRA)
+		\item PRR n'est pas g\'er\'ee dans le LIF classique
+	\end{itemize}
+
+\section*{SRM vs Ophélie}
+	Le modèle d'Ophélie est a priori équivalent au SRM avec fonction $\varepsilon$ en accord avec nos \emph{traces} de spikes sur les synapses (les délais et l'atténuation dendritique peuvent être directement pris en compte dans $\varepsilon$, ce qui définirait $F$ dans le modèle d'Ophélie, soit l'entrée du soma), $\eta$ et $\kappa$ en accord avec la variation du seuil suivant le temps écoulé depuis l'émission du dernier spike (les périodes réfractaires peuvent être considérées). 
+	Dans le SRM, la fuite est dispersée dans $\varepsilon$ et $\eta$.
+
+
+	
+
+	\begin{thebibliography}{10}
+		\bibitem{1} Gerstner, W., \& Kistler, W. M. (2002). Spiking neuron models: Single neurons, populations, plasticity. Cambridge university press.
+	\end{thebibliography}
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+\end{document}
+
+
+		
+	
